@@ -35,6 +35,7 @@ const WorkerSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    deleteTime: { type: Date },
     valid: {
         type: Number,
         default: 1
@@ -49,14 +50,14 @@ WorkerSchema.statics = {
      * 
      * @param {Object} options
      */
-    allWorker: function (options){
+    allWorker: function (options) {
         const page = options.page || 1;
         const limit = options.limit || 20;
         if (page < 1) {
             page = 1;
         }
 
-        return this.find({})
+        return this.find({valid:1})
             .skip((parseInt(page) - 1) * parseInt(limit))
             .limit(parseInt(limit))
             .exec();
